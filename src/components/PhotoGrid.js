@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 export default class PhotoGrid extends Component {
   render() {
@@ -7,6 +8,7 @@ export default class PhotoGrid extends Component {
         <h2>
             PhotoGrid
         </h2>
+        <Link to='/view/asdasd'>Go to single</Link>
       </div>
     );
   }
