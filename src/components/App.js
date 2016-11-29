@@ -10,4 +10,10 @@ function mapStateToProps (state) {
   }
 }
 
-const App = connect(mapStateToProps, mapDispatchToProps)
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators(actionCreators, dispatch)
+}
+
+const App = connect(mapStateToProps, mapDispatchToProps)(Main)
+
+export default App
