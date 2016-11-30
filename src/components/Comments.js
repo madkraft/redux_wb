@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 
 export default class Comments extends Component {
-  submitHandler (event) {
-    event.preventDefault()
-    console.log(event)
-    console.log(this.refs)
+  constructor () {
+    super()
   }
-  
+
   renderComment (comment, i) {
     return (
       <div className='comment' key={i}>
@@ -17,13 +15,25 @@ export default class Comments extends Component {
     )
   }
 
+  submitHandler (self, event) {
+    event.preventDefault()
+    const {postId} = self.props.params
+    const author = self.refs.author.value
+    const comment = self.refs.comment.value
+    
+    self.props.addComment(postId, author, comment)
+    self.refs.commentForm.reset()
+}
+
   render () {
     const {postComments} = this.props
-
+    
+    // refactor refs!!!!
+    
     return (
       <div>
         {postComments.map(this.renderComment)}
-        <form ref='commentForm' onSubmit={this.submitHandler}>
+        <form ref='commentForm' onSubmit={this.submitHandler.bind(null, this)}>
           <input type='text' ref='author' placeholder='author' />
           <input type='text' ref='comment' placeholder='comment' />
           <input type="submit" hidden />
