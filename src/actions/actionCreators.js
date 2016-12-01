@@ -26,3 +26,9 @@ export function removeComment (postId, index) {
     postId
   }
 }
+
+export function fetchPhotoes () {
+  return dispatch => {
+    fetch('http://rest.learncode.academy/api/johnbob/friends')
+  }
+}
