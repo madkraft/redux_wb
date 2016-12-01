@@ -1,4 +1,4 @@
-function postComments (state = [], action) {
+function postComment (state = [], action) {
   switch (action.type) {
     case 'ADD_COMMENT':
       // return new state with new coment
@@ -7,11 +7,13 @@ function postComments (state = [], action) {
         text: action.comment
       }]
     case 'REMOVE_COMMENT':
-      return state
+      return [
+        ...state.slice(0, action.index),
+        ...state.slice(action.index + 1)
+      ]
     default:
       return state
   }
-  return state
 }
 
 function comments (state = [], action) {
@@ -20,7 +22,7 @@ function comments (state = [], action) {
       // take current state
       ...state, 
       // overwrite this post with new one
-      [action.postId]: postComments(state[action.postId], action)
+      [action.postId]: postComment(state[action.postId], action)
     }
   }
   

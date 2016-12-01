@@ -1,41 +1,39 @@
-import React, { Component } from 'react'
+import React from 'react'
+import Comment from './Comment'
 
-export default class Comments extends Component {
-  constructor () {
-    super()
-  }
-
-  renderComment (comment, i) {
-    return (
-      <div className='comment' key={i}>
-        <strong className='user'>{comment.user}: </strong>
-        <span className='commentText'>{comment.text}</span>
-        <button>&times;</button>
-      </div>
-    )
-  }
-
-  submitHandler (self, event) {
+export default class Comments extends React.Component {
+  submitHandler (event) {
     event.preventDefault()
-    const {postId} = self.props.params
-    const author = self.refs.author.value
-    const comment = self.refs.comment.value
-    
-    self.props.addComment(postId, author, comment)
-    self.refs.commentForm.reset()
-}
+    const {postId} = this.props.params
+    const author = this.refs.author.value
+    const comment = this.refs.comment.value
+    this.props.addComment(postId, author, comment)
+    this.refs.commentForm.reset()
+  }
 
   render () {
     const {postComments} = this.props
     
-    // refactor refs!!!!
-    
     return (
       <div>
-        {postComments.map(this.renderComment)}
-        <form ref='commentForm' onSubmit={this.submitHandler.bind(null, this)}>
-          <input type='text' ref='author' placeholder='author' />
-          <input type='text' ref='comment' placeholder='comment' />
+        {postComments.map((comment, i) => {
+          return (
+            <Comment 
+              key={i}
+              comment={comment} 
+              index={i} 
+              {...this.props} />
+          )
+        })}
+        <form ref='commentForm' onSubmit={this.submitHandler.bind(this)}>
+          <input 
+            type='text' 
+            ref='author' 
+            placeholder='author' />
+          <input 
+            type='text' 
+            ref='comment' 
+            placeholder='comment' />
           <input type="submit" hidden />
         </form>
       </div>
